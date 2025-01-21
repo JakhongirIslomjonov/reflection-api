@@ -3,7 +3,7 @@ package uz.dev;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 
-public class Main {
+public class FieldExample {
     public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
 
         Student student = new Student(3, true, LocalDate.of(1994, 2, 3), "Ali");
@@ -32,8 +32,30 @@ public class Main {
         objectFirstName =firstName.get(student);
         System.out.println(objectFirstName);*/
 
+        Class<Student> studentClass = Student.class;
+        Field courseNumber = studentClass.getDeclaredField("courseNumber");
+        courseNumber.setAccessible(true);
+        courseNumber.set(student, 12);
+        Object objectCourseNumber = courseNumber.get(student);
+        System.out.printf("courseNumber : " + objectCourseNumber);
 
+    }
+}
 
+class Student {
 
+    private String firstName;
+
+    public LocalDate birthDate;
+
+    boolean married;
+
+    public final int courseNumber;
+
+    public Student(int courseNumber, boolean married, LocalDate birthDate, String firstName) {
+        this.courseNumber = courseNumber;
+        this.married = married;
+        this.birthDate = birthDate;
+        this.firstName = firstName;
     }
 }
